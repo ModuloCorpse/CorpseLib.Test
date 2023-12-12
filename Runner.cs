@@ -5,7 +5,7 @@ namespace CorpseLib.Test
     public class Runner
     {
         private readonly Configuration m_Configuration;
-        private readonly List<UnitTest> m_Tests = new();
+        private readonly List<UnitTest> m_Tests = [];
 
         public static int Main()
         {
@@ -122,7 +122,7 @@ namespace CorpseLib.Test
 
         private class Result
         {
-            private List<UnitTest.Result> m_Results = new();
+            private readonly List<UnitTest.Result> m_Results = [];
             private int m_TestSuccessCount = 0;
             private int m_TestFailureCount = 0;
             private int m_SuccessTotalCount = 0;

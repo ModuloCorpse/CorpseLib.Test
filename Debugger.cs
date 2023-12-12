@@ -4,7 +4,7 @@ namespace CorpseLib.Test
 {
     public class Debugger
     {
-        private Stopwatch m_Watch = new();
+        private readonly Stopwatch m_Watch = new();
         private long m_LastBytesUsed;
         private long m_LastProcessorRealTime;
         private long m_LastProcessorUserTime;

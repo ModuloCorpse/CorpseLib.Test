@@ -5,27 +5,17 @@ namespace CorpseLib.Test
 {
     public abstract class TestCase
     {
-        public class Result
+        public class Result(string name, long bytesUsed, long elapsedTime, long processorRealTime, long processorUserTime, bool testCaseResult)
         {
-            private readonly string m_Name;
-            private readonly long m_BytesUsed;
-            private readonly long m_ElapsedTime;
-            private readonly long m_ProcessorRealTime;
-            private readonly long m_ProcessorUserTime;
-            private readonly bool m_TestCaseResult;
+            private readonly string m_Name = name;
+            private readonly long m_BytesUsed = bytesUsed;
+            private readonly long m_ElapsedTime = elapsedTime;
+            private readonly long m_ProcessorRealTime = processorRealTime;
+            private readonly long m_ProcessorUserTime = processorUserTime;
+            private readonly bool m_TestCaseResult = testCaseResult;
 
             public string Name => m_Name;
             public bool TestCaseResult => m_TestCaseResult;
-
-            public Result(string name, long bytesUsed, long elapsedTime, long processorRealTime, long processorUserTime, bool testCaseResult)
-            {
-                m_Name = name;
-                m_BytesUsed = bytesUsed;
-                m_ElapsedTime = elapsedTime;
-                m_ProcessorRealTime = processorRealTime;
-                m_ProcessorUserTime = processorUserTime;
-                m_TestCaseResult = testCaseResult;
-            }
 
             public void Print() => Console.WriteLine("     * {0} : {1} ({2})", m_Name, (m_TestCaseResult) ? "SUCCESS" : "FAILURE", ToDebugString());
 

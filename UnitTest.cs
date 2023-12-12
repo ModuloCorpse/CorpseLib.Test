@@ -4,11 +4,11 @@
 
     public class UnitTest
     {
-        internal class Result
+        internal class Result(string name)
         {
-            private List<TestCase.Result> m_Results = new();
+            private readonly List<TestCase.Result> m_Results = [];
             private TestCase.Result? m_InitResult = null;
-            private readonly string m_Name;
+            private readonly string m_Name = name;
             private int m_SuccessCount = 0;
             private int m_FailureCount = 0;
 
@@ -16,8 +16,6 @@
             public int SuccessCount => m_SuccessCount;
             public int FailureCount => m_FailureCount;
             public bool InitSuccess => m_InitResult == null || m_InitResult.TestCaseResult;
-
-            public Result(string name) => m_Name = name;
 
             public void AddResult(TestCase.Result result)
             {
@@ -43,7 +41,7 @@
 
         private TestCase? m_Init = null;
         private TestCaseDelegate? m_Cleanup = null;
-        private readonly List<TestCase> m_Tests = new();
+        private readonly List<TestCase> m_Tests = [];
         private readonly string m_Name;
         private readonly bool m_ContinueTestOnFail;
 
