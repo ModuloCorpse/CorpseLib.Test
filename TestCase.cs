@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using static CorpseLib.Test.UnitTest;
 
 namespace CorpseLib.Test
 {
@@ -31,12 +32,12 @@ namespace CorpseLib.Test
         {
             Process currentProcess = Process.GetCurrentProcess();
             Stopwatch watch = Stopwatch.StartNew();
-            long lastBytesUsed = currentProcess.WorkingSet64;
+            long lastBytesUsed = currentProcess.VirtualMemorySize64;
             long lastProcessorRealTime = (long)currentProcess.TotalProcessorTime.TotalMilliseconds;
             long lastProcessorUserTime = (long)currentProcess.UserProcessorTime.TotalMilliseconds;
             bool testResult = RunTest();
             watch.Stop();
-            return new Result(m_Name, currentProcess.WorkingSet64 - lastBytesUsed, watch.ElapsedMilliseconds,
+            return new Result(m_Name, currentProcess.VirtualMemorySize64 - lastBytesUsed, watch.ElapsedMilliseconds,
                 (long)currentProcess.TotalProcessorTime.TotalMilliseconds - lastProcessorRealTime,
                 (long)currentProcess.UserProcessorTime.TotalMilliseconds - lastProcessorUserTime, testResult);
         }
@@ -55,53 +56,26 @@ namespace CorpseLib.Test
             {
                 if (method.ReturnType == typeof(bool))
                 {
-                    m_TestCase = () =>
-                    {
-                        try
-                        {
-                            return (bool)method.Invoke(instance, null)!;
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.ToString());
-                            return false;
-                        }
-                    };
+                    m_TestCase = () => (bool)method.Invoke(instance, null)!;
                 }
                 else if (method.ReturnType == typeof(void))
                 {
                     m_TestCase = () =>
                     {
-                        try
-                        {
-                            method.Invoke(instance, null);
-                            return true;
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.ToString());
-                            return false;
-                        }
+                        method.Invoke(instance, null);
+                        return true;
                     };
                 }
                 else if (method.ReturnType == typeof(OperationResult))
                 {
                     m_TestCase = () =>
                     {
-                        try
+                        OperationResult result = (OperationResult)method.Invoke(instance, null)!;
+                        if (result)
+                            return true;
+                        else
                         {
-                            OperationResult result = (OperationResult)method.Invoke(instance, null)!;
-                            if (result)
-                                return true;
-                            else
-                            {
-                                Console.WriteLine(result);
-                                return false;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.ToString());
+                            Console.WriteLine(result);
                             return false;
                         }
                     };
@@ -113,6 +87,22 @@ namespace CorpseLib.Test
                 throw new ArgumentException("Given method isn't a valid test case method");
         }
 
-        protected override bool RunTest() => m_TestCase();
+        protected override bool RunTest()
+        {
+            try
+            {
+                return m_TestCase();
+            }
+            catch (TestFailedException testFailed)
+            {
+                Console.WriteLine(testFailed.Message);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
     }
 }

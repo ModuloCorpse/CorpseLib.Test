@@ -4,6 +4,21 @@
 
     public class UnitTest
     {
+        public class TestFailedException(string message) : Exception(message) { }
+
+        public static void Assert(bool condition, string message)
+        {
+            if (!condition)
+                throw new TestFailedException(message);
+        }
+
+        public static void DumpAndCompare(string source, string target, string message)
+        {
+            Console.WriteLine(source);
+            if (source != target)
+                throw new TestFailedException(message);
+        }
+
         internal class Result(string name)
         {
             private readonly List<TestCase.Result> m_Results = [];
