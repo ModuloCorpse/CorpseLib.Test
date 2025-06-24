@@ -20,7 +20,7 @@ namespace CorpseLib.Test
 
             public void Print() => Console.WriteLine("     * {0} : {1} ({2})", m_Name, (m_TestCaseResult) ? "SUCCESS" : "FAILURE", ToDebugString());
 
-            public string ToDebugString() => string.Format("time: {0}ms, real: {1}ms, user: {2}ms, memory: {3}bytes", m_ElapsedTime, m_ProcessorRealTime, m_ProcessorUserTime, m_BytesUsed);
+            public string ToDebugString() => $"time: {m_ElapsedTime}ms, real: {m_ProcessorRealTime}ms, user: {m_ProcessorUserTime}ms, memory: {m_BytesUsed}bytes";
         }
         private readonly string m_Name;
 

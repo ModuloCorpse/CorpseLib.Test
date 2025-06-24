@@ -182,7 +182,7 @@ namespace CorpseLib.Test
         public bool Run()
         {
             Result result = InternalRun();
-            Console.WriteLine(string.Format("{0} Result {1}", new string('/', 46), new string('\\', 46)));
+            Console.WriteLine("////////////////////////////////////////////// Result \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
             result.Print(m_Tests.Count);
             return result.TestFailureCount == 0;
         }

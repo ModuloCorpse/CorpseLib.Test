@@ -33,6 +33,6 @@ namespace CorpseLib.Test
             m_ProcessorUserTime = (long)currentProcess.UserProcessorTime.TotalMilliseconds - m_LastProcessorUserTime;
         }
 
-        public override string ToString() => string.Format("time: {0}ms, real: {1}ms, user: {2}ms, memory: {3}bytes", m_ElapsedTime, m_ProcessorRealTime, m_ProcessorUserTime, m_BytesUsed);
+        public override string ToString() => $"time: {m_ElapsedTime}ms, real: {m_ProcessorRealTime}ms, user: {m_ProcessorUserTime}ms, memory: {m_BytesUsed}bytes";
     }
 }

@@ -11,7 +11,7 @@
             {
                 int headerFirstFillerHalf = (Size - str.Length - 2) / 2;
                 int headerSecondFillerHalf = Size - (headerFirstFillerHalf + str.Length + 2);
-                Console.WriteLine(string.Format("{0} {1} {2}", new string(Filler, headerFirstFillerHalf), str, new string(Filler, headerSecondFillerHalf)));
+                Console.WriteLine($"{new string(Filler, headerFirstFillerHalf)} {str} {new string(Filler, headerSecondFillerHalf)}");
             }
         }
 
