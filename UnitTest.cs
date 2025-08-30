@@ -98,7 +98,7 @@
             {
                 TestCase.Result testResult = m_Init.StartTest();
                 result.SetInitResult(testResult);
-                if (!testResult.TestCaseResult && (!configuration.ContinueTestOnFail || !m_ContinueTestOnFail))
+                if (!testResult.TestCaseResult)
                     return result;
             }
             RunTestCases(configuration, ref result);
